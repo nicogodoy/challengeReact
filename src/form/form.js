@@ -18,6 +18,7 @@ export default function Forms({ getUser }) {
   const [isLogin, setIsLogin] = useState(false);
 
   return (
+    
     <Formik
       initialValues={{
         email: "",
@@ -48,21 +49,25 @@ export default function Forms({ getUser }) {
         console.log("Formulario enviado");
         //console.log(value);
         resetForm();
-
+  
         getUser({ email, password })
           .then((response) => {
             let { accessToken, refreshToken, user } = response;
             localStorage.setItem("ACCESS_TOKEN", accessToken);
             localStorage.setItem("REFRESH_TOKEN", refreshToken);
             localStorage.setItem("User", user);
-            window.location.href = "/card";
-            console.log(response);
+            console.log(response.user);
+            window.location.href = "/home";
+            console.log(user)
+            alert("usuario correcto")
           })
           .catch((error) => {
             alert("email o paswoord erroneo");
             setIsLogin(false);
           });
+          console.log("se reedirigieron correctamente")
       }}
+      getUser
     >
       {({
         values,
@@ -147,103 +152,3 @@ export default function Forms({ getUser }) {
   );
 }
 
-// import { React, useState } from "react";
-// import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-// import Typography from "@material-ui/core/Typography";
-
-// import {
-//   Button,
-//   Form,
-//   FormGroup,
-//   FormControl,
-//   Container,
-//   Alert,
-//   Spinner,
-//   FormLabel,
-// } from "react-bootstrap";
-
-// export default function Forms({ getUser }) {
-//   const [password, setPassword] = useState("");
-//   const [email, setEmail] = useState("");
-//   const [isLogin, setIsLogin] = useState(false);
-
-//   function validateForm() {
-//     return email.length > 0 && password.length > 0;
-//   }
-
-//   function handleSubmit(e) {
-//     e.preventDefault();
-//     console.log("Formulario enviado");
-//     console.log(email);
-//     console.log(password);
-//     setIsLogin(true);
-//     getUser({ email, password })
-//       .then((response) => {
-//         let { accessToken, refreshToken, user } = response;
-//         localStorage.setItem("ACCESS_TOKEN", accessToken);
-//         localStorage.setItem("REFRESH_TOKEN", refreshToken);
-//         localStorage.setItem("User", user);
-//         window.location.href = "/card";
-//         console.log(response);
-//       })
-//       .catch((error) => {
-//         alert("email o paswoord erroneo");
-//         setIsLogin(false)
-//       });
-//   }
-
-//   return (
-//     <Container>
-//       {" "}
-//       {/* Muestra el background*/}
-//       {/* <input type="image" src={LogoStellantis} className="img-fluid" alt="Responsive image"/> */}
-//       <Form onSubmit={handleSubmit} className="White">
-//         <div id="isesion" style={{ textAlign: "center" }}>
-//           <LockOutlinedIcon fontSize="large" color="primary" />
-//           <Typography component="h1" variant="h5">
-//             Iniciar Sesión
-//           </Typography>
-//           <br />
-//           <FormGroup controlId="formBasicEmail">
-//             <FormLabel style={{ display: "flex" }}>Email </FormLabel>
-//             <FormControl
-//               type="text"
-//               placeholder="Ingresar un email"
-//               autoFocus
-//               value={email}
-//               onChange={(e) => setEmail(e.target.value)}
-//               // value={user.email}
-//               // onChange={(e) => setUser(e.target.value)}
-//             />
-//           </FormGroup>
-
-//           <FormGroup controlId="formBasicPassword">
-//             <FormLabel style={{ display: "flex" }}>Contraseña </FormLabel>
-//             <FormControl
-//               type="password"
-//               placeholder="Ingresar contraseña"
-//               value={password}
-//               onChange={(e) => setPassword(e.target.value)}
-//               // value={user.password}
-//               // onChange={(e) => setUser(e.target.value)}
-//             />
-//           </FormGroup>
-//           <br />
-
-//           <Alert variant={"danger"}>
-//             Debes completar todos los datos para que se envie el formulario
-//           </Alert>
-//           <Button
-//             type="submit"
-//             variant="primary"
-//             block
-//             disabled={!validateForm()}
-//           >
-//             {/* Iniciar seccion */}
-//             {isLogin ? <Spinner animation="border" /> : "Iniciar sesion"}
-//           </Button>
-//         </div>
-//       </Form>
-//     </Container>
-//   );
-// }

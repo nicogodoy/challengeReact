@@ -7,7 +7,7 @@ export default function navb() {
       <Collapse id="navbarToggleExternalContent">
         <BDiv bg="dark" p="4">
           <BH5 text="white">SuperHero</BH5>
-          <BSpan text="muted">Debes loguearte para acceder a tus SuperHeroes</BSpan>
+          <BSpan text="muted"></BSpan>
         </BDiv>
       </Collapse>
       <Navbar dark bg="dark">
